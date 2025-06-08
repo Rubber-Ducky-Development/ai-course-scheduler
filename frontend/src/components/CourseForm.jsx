@@ -1,47 +1,76 @@
-import { useState } from 'react';
+import React, { useState } from "react";
+import "../App.css";
 
-function CourseForm({ onChange }) {
-  const [courses, setCourses] = useState([{ code: '', instructor: '' }]);
+const StepIndicator = ({ step }) => (
+  <div className="step-indicator">
+    <div className={`step${step === 1 ? " active" : ""}`}>1</div>
+    <div className="step-line" />
+    <div className={`step${step === 2 ? " active" : ""}`}>2</div>
+    <div className="step-line" />
+    <div className={`step${step === 3 ? " active" : ""}`}>3</div>
+  </div>
+);
 
-  const handleChange = (index, field, value) => {
-    const updated = [...courses];
-    updated[index][field] = value;
-    setCourses(updated);
-    onChange(updated); // send data to parent
-  };
+const CourseForm = ({ onNext }) => {
+  const [courses, setCourses] = useState("");
+  const [instructors, setInstructors] = useState("");
+  const [error, setError] = useState("");
 
-  const addCourse = () => {
-    if (courses.length < 7) {
-      setCourses([...courses, { code: '', instructor: '' }]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!courses.trim()) {
+      setError("Please enter at least one course code.");
+      return;
     }
+    setError("");
+    onNext({ courses, instructors });
   };
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-2">Courses</h2>
-      {courses.map((course, index) => (
-        <div key={index} className="mb-2">
-          <input
-            type="text"
-            placeholder="Course Code"
-            value={course.code}
-            onChange={(e) => handleChange(index, 'code', e.target.value)}
-            className="border px-2 py-1 rounded mr-2"
-          />
-          <input
-            type="text"
-            placeholder="Instructor (optional)"
-            value={course.instructor}
-            onChange={(e) => handleChange(index, 'instructor', e.target.value)}
-            className="border px-2 py-1 rounded"
-          />
-        </div>
-      ))}
-      <button onClick={addCourse} className="bg-blue-600 text-white px-3 py-1 mt-2 rounded">
-        Add Course
-      </button>
+    <div className="form-container">
+      <StepIndicator step={1} />
+      <div className="form-card">
+        <h2 className="form-title">
+          <span role="img" aria-label="calendar">📅</span> Create Your Schedule
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="form-section">
+            <label htmlFor="courses" className="form-label">
+              <span role="img" aria-label="book">📚</span> Course Codes <span className="required">*</span>
+            </label>
+            <input
+              id="courses"
+              className="form-input"
+              type="text"
+              placeholder="e.g. COMP 1405, MATH 1007"
+              value={courses}
+              onChange={e => setCourses(e.target.value)}
+              required
+            />
+            <div className="form-hint">Enter course codes separated by commas.</div>
+          </div>
+          <div className="form-section">
+            <label htmlFor="instructors" className="form-label">
+              <span role="img" aria-label="teacher">👨‍🏫</span> Preferred Instructors (Optional)
+            </label>
+            <input
+              id="instructors"
+              className="form-input"
+              type="text"
+              placeholder="Type an instructor name and press comma or Enter"
+              value={instructors}
+              onChange={e => setInstructors(e.target.value)}
+            />
+            <div className="form-hint">Enter instructor names separated by commas.</div>
+          </div>
+          {error && <div className="form-error">{error}</div>}
+          <button className="form-btn" type="submit">
+            <span role="img" aria-label="arrow">➡️</span> Next: Preferences
+          </button>
+        </form>
+      </div>
     </div>
   );
-}
+};
 
 export default CourseForm;
