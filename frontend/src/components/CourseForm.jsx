@@ -26,6 +26,12 @@ const defaultAvailability = {
   Friday: { morning: true, afternoon: true, evening: false },
 };
 
+const defaultSectionTypes = {
+  inPerson: true,
+  online: true,
+  hybrid: true
+};
+
 const busynessLabels = ["1 class/tutorial", "2 classes/tutorials", "3 classes/tutorials", "4 classes/tutorials", "5+ classes/tutorials"];
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
 
@@ -35,6 +41,7 @@ const CourseForm = ({ onNext }) => {
   const [error, setError] = useState("");
   const [busyness, setBusyness] = useState(defaultBusyness);
   const [availability, setAvailability] = useState(defaultAvailability);
+  const [sectionTypes, setSectionTypes] = useState(defaultSectionTypes);
 
   const handleBusynessChange = (day, value) => {
     setBusyness({ ...busyness, [day]: value });
@@ -48,6 +55,13 @@ const CourseForm = ({ onNext }) => {
       },
     });
   };
+  
+  const handleSectionTypeChange = (type) => {
+    setSectionTypes({
+      ...sectionTypes,
+      [type]: !sectionTypes[type]
+    });
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -56,7 +70,7 @@ const CourseForm = ({ onNext }) => {
       return;
     }
     setError("");
-    onNext({ courses, instructors, busyness, availability });
+    onNext({ courses, instructors, busyness, availability, sectionTypes });
   };
 
   return (
@@ -96,6 +110,39 @@ const CourseForm = ({ onNext }) => {
             />
             <div className="form-hint">Enter instructor names separated by commas.</div>
           </div>
+          
+          <div className="form-section">
+            <label className="form-label">
+              <span role="img" aria-label="computer">💻</span> Section Type Preference
+            </label>
+            <div className="section-type-options">
+              <label className="checkbox-container">
+                <input 
+                  type="checkbox" 
+                  checked={sectionTypes.inPerson} 
+                  onChange={() => handleSectionTypeChange('inPerson')}
+                />
+                <span className="checkbox-label">In-Person</span>
+              </label>
+              <label className="checkbox-container">
+                <input 
+                  type="checkbox" 
+                  checked={sectionTypes.online} 
+                  onChange={() => handleSectionTypeChange('online')}
+                />
+                <span className="checkbox-label">Online</span>
+              </label>
+              <label className="checkbox-container">
+                <input 
+                  type="checkbox" 
+                  checked={sectionTypes.hybrid} 
+                  onChange={() => handleSectionTypeChange('hybrid')}
+                />
+                <span className="checkbox-label">Hybrid</span>
+              </label>
+            </div>
+          </div>
+          
           <div className="form-section">
             <label className="form-label">
               <span role="img" aria-label="clock">⏰</span> How busy do you want your days?
