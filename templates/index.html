@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carleton University Course Scheduler</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <img src="https://carleton.ca/brand/wp-content/uploads/social-media-sample-red-247w-1.png" alt="Carleton University Logo" class="logo">
+                <h1>Course Scheduler</h1>
+            </div>
+            <p class="tagline">Plan your perfect semester with ease</p>
+        </header>
+
+        <main>
+            <div class="scheduler-card">
+                <h2><i class="fas fa-calendar-alt"></i> Create Your Schedule</h2>
+                
+                <div class="step-navigation">
+                    <div class="step active" data-step="courses">
+                        <div class="step-number">1</div>
+                        <div class="step-label">Courses</div>
+                    </div>
+                    <div class="step" data-step="preferences">
+                        <div class="step-number">2</div>
+                        <div class="step-label">Preferences</div>
+                    </div>
+                    <div class="step" data-step="schedule">
+                        <div class="step-number">3</div>
+                        <div class="step-label">Schedule</div>
+                    </div>
+                </div>
+                
+                <!-- Step 1: Course Selection -->
+                <div class="step-content active" id="courses-step">
+                    <div class="form-section">
+                        <h3><i class="fas fa-book"></i> Enter Your Courses</h3>
+                        <div class="form-group">
+                            <label for="course-input">Course Codes <span class="required">*</span></label>
+                            <p class="field-hint">Enter course codes separated by commas (e.g. COMP 1405, MATH 1007)</p>
+                            <div class="tag-input-container">
+                                <div class="tags-container" id="course-tags-container"></div>
+                                <input type="text" id="course-input" placeholder="Type a course code and press comma or Enter">
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-user-tie"></i> Preferred Instructors (Optional)</h3>
+                        <div class="form-group">
+                            <label for="instructor-input">Instructor Names</label>
+                            <p class="field-hint">Enter instructor names separated by commas</p>
+                            <div class="tag-input-container">
+                                <div class="tags-container" id="instructor-tags-container"></div>
+                                <input type="text" id="instructor-input" placeholder="Type an instructor name and press comma or Enter">
+                            </div>
+                        </div>
+                        
+                        <div class="actions">
+                            <button id="next-to-preferences" class="next-btn" type="button"><i class="fas fa-arrow-right"></i> Next: Preferences</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2: Preferences -->
+                <div class="step-content" id="preferences-step">
+                    <div class="form-section">
+                        <h3><i class="fas fa-sliders-h"></i> Daily Schedule Preferences</h3>
+                        
+                        <div class="day-preferences">                            <div class="day-preference">
+                                <label>Monday Busyness</label>
+                                <div class="slider-container">
+                                    <span class="slider-label">Less Busy</span>
+                                    <input type="range" class="busyness-slider" id="monday-busyness" min="1" max="5" value="3">
+                                    <span class="slider-label">More Busy</span>
+                                </div>
+                                <div class="slider-value" id="monday-busyness-value">Medium</div>
+                                <div class="day-time-preferences">
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="monday-morning" checked>
+                                        <label for="monday-morning">Morning</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="monday-afternoon" checked>
+                                        <label for="monday-afternoon">Afternoon</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="monday-evening">
+                                        <label for="monday-evening">Evening</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="day-preference">
+                                <label>Tuesday Busyness</label>
+                                <div class="slider-container">
+                                    <span class="slider-label">Less Busy</span>
+                                    <input type="range" class="busyness-slider" id="tuesday-busyness" min="1" max="5" value="3">
+                                    <span class="slider-label">More Busy</span>
+                                </div>
+                                <div class="slider-value" id="tuesday-busyness-value">Medium</div>
+                                <div class="day-time-preferences">
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="tuesday-morning" checked>
+                                        <label for="tuesday-morning">Morning</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="tuesday-afternoon" checked>
+                                        <label for="tuesday-afternoon">Afternoon</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="tuesday-evening">
+                                        <label for="tuesday-evening">Evening</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="day-preference">
+                                <label>Wednesday Busyness</label>
+                                <div class="slider-container">
+                                    <span class="slider-label">Less Busy</span>
+                                    <input type="range" class="busyness-slider" id="wednesday-busyness" min="1" max="5" value="3">
+                                    <span class="slider-label">More Busy</span>
+                                </div>
+                                <div class="slider-value" id="wednesday-busyness-value">Medium</div>
+                                <div class="day-time-preferences">
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="wednesday-morning" checked>
+                                        <label for="wednesday-morning">Morning</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="wednesday-afternoon" checked>
+                                        <label for="wednesday-afternoon">Afternoon</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="wednesday-evening">
+                                        <label for="wednesday-evening">Evening</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="day-preference">
+                                <label>Thursday Busyness</label>
+                                <div class="slider-container">
+                                    <span class="slider-label">Less Busy</span>
+                                    <input type="range" class="busyness-slider" id="thursday-busyness" min="1" max="5" value="3">
+                                    <span class="slider-label">More Busy</span>
+                                </div>
+                                <div class="slider-value" id="thursday-busyness-value">Medium</div>
+                                <div class="day-time-preferences">
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="thursday-morning" checked>
+                                        <label for="thursday-morning">Morning</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="thursday-afternoon" checked>
+                                        <label for="thursday-afternoon">Afternoon</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="thursday-evening">
+                                        <label for="thursday-evening">Evening</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="day-preference">
+                                <label>Friday Busyness</label>
+                                <div class="slider-container">
+                                    <span class="slider-label">Less Busy</span>
+                                    <input type="range" class="busyness-slider" id="friday-busyness" min="1" max="5" value="3">
+                                    <span class="slider-label">More Busy</span>
+                                </div>
+                                <div class="slider-value" id="friday-busyness-value">Medium</div>
+                                <div class="day-time-preferences">
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="friday-morning" checked>
+                                        <label for="friday-morning">Morning</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="friday-afternoon" checked>
+                                        <label for="friday-afternoon">Afternoon</label>
+                                    </div>
+                                    <div class="checkbox-item day-checkbox">
+                                        <input type="checkbox" id="friday-evening">
+                                        <label for="friday-evening">Evening</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3><i class="fas fa-clock"></i> General Time Preferences</h3>
+                        <div class="time-preferences">
+                            <p class="field-hint">These settings will apply to any day where specific time preferences are not set</p>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="morning-preference" checked>
+                                    <label for="morning-preference">Morning Classes (8AM - 12PM)</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="afternoon-preference" checked>
+                                    <label for="afternoon-preference">Afternoon Classes (12PM - 5PM)</label>
+                                </div>
+                                
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="evening-preference">
+                                    <label for="evening-preference">Evening Classes (5PM - 10PM)</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="actions">
+                            <button id="back-to-courses" class="back-btn" type="button"><i class="fas fa-arrow-left"></i> Back</button>
+                            <button id="generate-btn" type="button"><i class="fas fa-magic"></i> Generate Schedule</button>
+                        </div>
+                    </div>
+                </div>            </div>
+
+            <!-- Step 3: Results -->
+            <div class="result-card" id="result-section" style="display: none;">
+                <h2><i class="fas fa-check-circle"></i> Your Schedule</h2>
+                <div id="schedule-result">
+                    <!-- Schedule results will be displayed here -->
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Carleton University Course Scheduler</p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
