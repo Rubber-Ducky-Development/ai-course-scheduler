@@ -27,7 +27,10 @@ const defaultAvailability = {
 const defaultSectionTypes = {
   inPerson: true,
   online: true,
-  hybrid: true
+  hybrid: true,
+  lecture: true,
+  tutorial: false,
+  lab: true
 };
 
 const busynessLabels = ["1 class/tutorial", "2 classes/tutorials", "3 classes/tutorials", "4 classes/tutorials", "5+ classes/tutorials"];
@@ -70,7 +73,35 @@ const CourseForm = ({ onNext }) => {
       return;
     }
     setError("");
-    onNext({ courses, instructors, busyness, availability, sectionTypes, timeBuffer });
+    
+    // Format data according to expected structure
+    const formData = {
+      courses,
+      instructors,
+      sectionTypes: {
+        ...sectionTypes,
+        lecture: true,
+        tutorial: false,
+        lab: true,
+      },
+      timeBuffer,
+      busyness: {
+        monday: busyness.Monday,
+        tuesday: busyness.Tuesday,
+        wednesday: busyness.Wednesday,
+        thursday: busyness.Thursday,
+        friday: busyness.Friday,
+      },
+      availability: {
+        monday: availability.Monday,
+        tuesday: availability.Tuesday,
+        wednesday: availability.Wednesday,
+        thursday: availability.Thursday,
+        friday: availability.Friday,
+      },
+    };
+    
+    onNext(formData); // send to parent
   };
 
   return (
