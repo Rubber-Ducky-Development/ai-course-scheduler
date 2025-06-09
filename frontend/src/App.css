@@ -213,3 +213,44 @@ body {
   font-size: 16px;
   color: #f3f3f3;
 }
+
+/* Time Buffer Options */
+.buffer-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.buffer-option {
+  background: #1a1c23;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.buffer-option:hover {
+  background: #26282f;
+}
+
+.buffer-option.selected {
+  border-color: #ff5c5c;
+  background: rgba(255, 92, 92, 0.1);
+}
+
+.buffer-option input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.buffer-option span {
+  font-size: 15px;
+  font-weight: 500;
+}

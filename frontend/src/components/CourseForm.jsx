@@ -34,6 +34,7 @@ const defaultSectionTypes = {
 
 const busynessLabels = ["1 class/tutorial", "2 classes/tutorials", "3 classes/tutorials", "4 classes/tutorials", "5+ classes/tutorials"];
 const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const bufferOptions = ["No buffer", "30 minutes", "1 hour", "1+ hours"];
 
 const CourseForm = ({ onNext }) => {
   const [courses, setCourses] = useState("");
@@ -42,6 +43,7 @@ const CourseForm = ({ onNext }) => {
   const [busyness, setBusyness] = useState(defaultBusyness);
   const [availability, setAvailability] = useState(defaultAvailability);
   const [sectionTypes, setSectionTypes] = useState(defaultSectionTypes);
+  const [timeBuffer, setTimeBuffer] = useState(1); // Default to 30 minutes
 
   const handleBusynessChange = (day, value) => {
     setBusyness({ ...busyness, [day]: value });
@@ -70,7 +72,7 @@ const CourseForm = ({ onNext }) => {
       return;
     }
     setError("");
-    onNext({ courses, instructors, busyness, availability, sectionTypes });
+    onNext({ courses, instructors, busyness, availability, sectionTypes, timeBuffer });
   };
 
   return (
@@ -140,6 +142,29 @@ const CourseForm = ({ onNext }) => {
                 />
                 <span className="checkbox-label">Hybrid</span>
               </label>
+            </div>
+          </div>
+          
+          <div className="form-section">
+            <label className="form-label">
+              <span role="img" aria-label="hourglass">⏳</span> Time Buffer Between Classes
+            </label>
+            <div className="buffer-options">
+              {bufferOptions.map((option, index) => (
+                <label 
+                  key={index} 
+                  className={`buffer-option ${timeBuffer === index ? "selected" : ""}`}
+                >
+                  <input
+                    type="radio"
+                    name="timeBuffer"
+                    value={index}
+                    checked={timeBuffer === index}
+                    onChange={() => setTimeBuffer(index)}
+                  />
+                  <span>{option}</span>
+                </label>
+              ))}
             </div>
           </div>
           
