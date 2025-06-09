@@ -6,8 +6,6 @@ const StepIndicator = ({ step }) => (
     <div className={`step${step === 1 ? " active" : ""}`}>1</div>
     <div className="step-line" />
     <div className={`step${step === 2 ? " active" : ""}`}>2</div>
-    <div className="step-line" />
-    <div className={`step${step === 3 ? " active" : ""}`}>3</div>
   </div>
 );
 
