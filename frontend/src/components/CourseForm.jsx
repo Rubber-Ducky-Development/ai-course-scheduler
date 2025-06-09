@@ -218,7 +218,7 @@ const CourseForm = ({ onNext }) => {
           </div>
           {error && <div className="form-error">{error}</div>}
           <button className="form-btn" type="submit">
-            <span role="img" aria-label="arrow">➡️</span> Next: Preferences
+            <span role="img" aria-label="arrow">➡️</span> Generate schedules
           </button>
         </form>
       </div>
